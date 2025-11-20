@@ -62,74 +62,6 @@ const Setting = () => {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                  <label className="block text-sm text-gray-600 font-semibold dark:text-gray-400 mb-1 sm:col-span-2">
-                    {t("AllowAutoTranslation")}
-                  </label>
-
-                  <div className="md:col-span-3 sm:col-span-4">
-                    <SwitchToggle
-                      title={""}
-                      handleProcess={setIsAllowAutoTranslation}
-                      processOption={isAllowAutoTranslation}
-                    />
-                  </div>
-                </div>
-                <div
-                  className={`grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6`}
-                  style={{
-                    height: isAllowAutoTranslation ? "auto" : 0,
-                    transition: "all 0.6s",
-                    visibility: !isAllowAutoTranslation ? "hidden" : "visible",
-                    opacity: !isAllowAutoTranslation ? "0" : "1",
-                    marginBottom: !isAllowAutoTranslation ? 0 : 24,
-                  }}
-                >
-                  <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
-                    {t("TranslationSecretKey")}
-                    <br />
-                    <small className="font-normal text-xs">
-                      You can create key from{" "}
-                      <a
-                        href="https://mymemory.translated.net/doc/keygen.php"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 underline hover:text-blue-700"
-                      >
-                        here
-                      </a>
-                    </small>
-                  </label>
-                  <div className="md:col-span-3 sm:col-span-4">
-                    <InputAreaTwo
-                      register={register}
-                      label={t("TranslationSecretKey")}
-                      name="translation_key"
-                      type="password"
-                      placeholder={t("TranslationSecretKey")}
-                      autoComplete="new-password"
-                      required={isAllowAutoTranslation}
-                    />
-                    <Error errorName={errors.translation_key} />
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 relative">
-                  <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
-                    {t("DefaultLanguage")}
-                  </label>
-
-                  <div className="sm:col-span-3">
-                    <SelectLanguageThree
-                      required
-                      watch={watch}
-                      setValue={setValue}
-                      register={register}
-                      name="default_language"
-                      label={t("DefaultLanguage")}
-                    />
-                  </div>
-                </div>
-
                 <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <label className="block text-sm text-gray-600 font-semibold dark:text-gray-400 mb-1 sm:col-span-2">
                     {t("DefaultCurrency")}
@@ -158,28 +90,6 @@ const Setting = () => {
                       label="Time Zone"
                     />
                     <Error errorName={errors.default_time_zone} />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                  <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
-                    {t("DefaultDateFormat")}
-                  </label>
-
-                  <div className="sm:col-span-3">
-                    <Select
-                      {...register(`default_date_format`, {
-                        required: "Default date formate is required",
-                      })}
-                    >
-                      <option value="" defaultValue hidden>
-                        {t("DefaultDateFormat")}
-                      </option>
-                      <option value="MMM D, YYYY">MM/DD/YYYY</option>
-                      <option value="D MMM, YYYY">DD/MM/YYYY</option>
-                      <option value="YYYY,MMM D">YYYY/MM/DD</option>
-                    </Select>
-                    <Error errorName={errors.default_date_format} />
                   </div>
                 </div>
 
@@ -272,22 +182,6 @@ const Setting = () => {
                 </div>
                 <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
                   <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
-                    {/* {t("FooterAddress")} */}
-                    {t("VatNumber")}
-                  </label>
-                  <div className="sm:col-span-3">
-                    <InputAreaTwo
-                      register={register}
-                      label="Address"
-                      name="vat_number"
-                      type="text"
-                      placeholder="Vat Number"
-                    />
-                    <Error errorName={errors.vat_number} />
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                  <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
                     {t("AddressLine")}
                   </label>
                   <div className="sm:col-span-3">
@@ -350,21 +244,6 @@ const Setting = () => {
                       placeholder="Email"
                     />
                     <Error errorName={errors.email} />
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
-                  <label className="block text-sm font-semibold text-gray-600 dark:text-gray-400 mb-1 sm:col-span-2">
-                    {t("WebSite")}
-                  </label>
-                  <div className=" sm:col-span-3">
-                    <InputAreaTwo
-                      register={register}
-                      label="Email"
-                      name="website"
-                      type="text"
-                      placeholder="Web Site"
-                    />
-                    <Error errorName={errors.website} />
                   </div>
                 </div>
               </div>

@@ -18,8 +18,6 @@ const Coupons = lazy(() => import("@/pages/Coupons"));
 const Page404 = lazy(() => import("@/pages/404"));
 const ComingSoon = lazy(() => import("@/pages/ComingSoon"));
 const EditProfile = lazy(() => import("@/pages/EditProfile"));
-const Languages = lazy(() => import("@/pages/Languages"));
-const Currencies = lazy(() => import("@/pages/Currencies"));
 const Setting = lazy(() => import("@/pages/Setting"));
 const StoreHome = lazy(() => import("@/pages/StoreHome"));
 const StoreSetting = lazy(() => import("@/pages/StoreSetting"));
@@ -60,15 +58,6 @@ const routes = [
     path: "/categories",
     component: Category,
   },
-  {
-    path: "/languages",
-    component: Languages,
-  },
-  {
-    path: "/currencies",
-    component: Currencies,
-  },
-
   {
     path: "/categories/:id",
     component: ChildCategory,
@@ -138,8 +127,6 @@ const routeAccessList = [
   { label: "Orders", value: "orders" },
   { label: "Staff", value: "our-staff" },
   { label: "Settings", value: "settings" },
-  { label: "Languages", value: "languages" },
-  { label: "Currencies", value: "currencies" },
   { label: "ViewStore", value: "store" },
   { label: "StoreCustomization", value: "customization" },
   { label: "StoreSettings", value: "store-settings" },

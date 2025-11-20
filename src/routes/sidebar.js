@@ -5,7 +5,6 @@ import {
   FiCompass,
   FiSettings,
   FiSlack,
-  FiGlobe,
   FiTarget,
 } from "react-icons/fi";
 
@@ -69,29 +68,9 @@ const sidebar = [
     name: "Settings",
   },
   {
-    icon: FiGlobe,
-    name: "International",
-    routes: [
-      {
-        path: "/languages",
-        name: "Languages",
-      },
-      {
-        path: "/currencies",
-        name: "Currencies",
-      },
-    ],
-  },
-  {
     icon: FiTarget,
     name: "OnlineStore",
     routes: [
-      {
-        name: "ViewStore",
-        path: "/store",
-        outside: "store",
-      },
-
       {
         path: "/store/customization",
         name: "StoreCustomization",

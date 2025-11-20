@@ -54,6 +54,8 @@ const useProductSubmit = (id) => {
   const [openModal, setOpenModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [slug, setSlug] = useState("");
+  const [sizeVariants, setSizeVariants] = useState([]);
+  const [useSizeVariantSystem, setUseSizeVariantSystem] = useState(false);
 
   const { handlerTextTranslateHandler } = useTranslationValue();
   const { showingTranslateValue, getNumber, getNumberTwo } = useUtilsFunction();
@@ -97,6 +99,14 @@ const useProductSubmit = (id) => {
         return notifyError("Default Category is required!");
       }
 
+      // Validate that if combination is enabled, we have variants
+      if (isCombination && variants.length === 0 && sizeVariants.length === 0) {
+        setIsSubmitting(false);
+        return notifyError(
+          "Please add at least one variant or disable combination!"
+        );
+      }
+
       const updatedVariants = variants.map((v, i) => {
         const newObj = {
           ...v,
@@ -107,6 +117,28 @@ const useProductSubmit = (id) => {
         };
         return newObj;
       });
+
+      // Process size variants if they exist
+      const processedSizeVariants = sizeVariants.map((v, i) => {
+        return {
+          ...v,
+          variantType: "size",
+          quantity: Number(v?.quantity || 0),
+        };
+      });
+
+      // Determine which variant system to use
+      const finalVariants =
+        sizeVariants.length > 0 ? processedSizeVariants : updatedVariants;
+      const totalStockCalculated = finalVariants.reduce(
+        (acc, v) => acc + Number(v.quantity || 0),
+        0
+      );
+
+      console.log("Size Variants:", sizeVariants);
+      console.log("Processed Size Variants:", processedSizeVariants);
+      console.log("Final Variants:", finalVariants);
+      console.log("Is Combination:", isCombination);
 
       setIsBasicComplete(true);
       setPrice(data.price);
@@ -146,7 +178,8 @@ const useProductSubmit = (id) => {
         category: defaultCategory[0]._id,
 
         image: imageUrl,
-        stock: variants?.length < 1 ? data.stock : Number(totalStock),
+        stock:
+          finalVariants?.length > 0 ? Number(totalStockCalculated) : data.stock,
         tag: JSON.stringify(tag),
 
         prices: {
@@ -154,9 +187,15 @@ const useProductSubmit = (id) => {
           originalPrice: getNumberTwo(data.originalPrice),
           discount: Number(data.originalPrice) - Number(data.price),
         },
-        isCombination: updatedVariants?.length > 0 ? isCombination : false,
-        variants: isCombination ? updatedVariants : [],
+        isCombination: finalVariants?.length > 0 && isCombination,
+        variants:
+          isCombination && finalVariants?.length > 0 ? finalVariants : [],
       };
+
+      console.log(
+        "Product Data to be saved:",
+        JSON.stringify(productData, null, 2)
+      );
 
       // console.log("productData ===========>", productData, "data", data);
       // return setIsSubmitting(false);
@@ -268,6 +307,8 @@ const useProductSubmit = (id) => {
       setTag([]);
       setVariants([]);
       setVariant([]);
+      setSizeVariants([]);
+      setUseSizeVariantSystem(false);
       setValues({});
       setTotalStock(0);
       setSelectedCategory([]);
@@ -344,7 +385,21 @@ const useProductSubmit = (id) => {
             setDefaultCategory([res?.category]);
             setTag(JSON.parse(res.tag));
             setImageUrl(res.image);
-            setVariants(res.variants);
+
+            // Separate size variants from traditional variants
+            const sizeVars =
+              res.variants?.filter((v) => v.variantType === "size") || [];
+            const traditionalVars =
+              res.variants?.filter((v) => v.variantType !== "size") || [];
+
+            if (sizeVars.length > 0) {
+              setSizeVariants(sizeVars);
+              setVariants([]);
+            } else {
+              setVariants(res.variants);
+              setSizeVariants([]);
+            }
+
             setIsCombination(res.isCombination);
             setQuantity(res?.stock);
             setTotalStock(res.stock);
@@ -380,15 +435,37 @@ const useProductSubmit = (id) => {
 
     setAttTitle([...result]);
 
-    const res = Object?.keys(Object.assign({}, ...variants));
-    const varTitle = attribue?.filter((att) => res.includes(att._id));
+    // Handle size variants
+    if (sizeVariants?.length > 0) {
+      // Find the "Size" attribute from attribue array
+      const sizeAttr = attribue?.find((att) => {
+        const attTitle = showingTranslateValue(att?.title, lang);
+        return attTitle.toLowerCase() === "size";
+      });
 
-    if (variants?.length > 0) {
-      const totalStock = variants?.reduce((pre, acc) => pre + acc.quantity, 0);
-      setTotalStock(Number(totalStock));
+      if (sizeAttr) {
+        setVariantTitle([sizeAttr]);
+        const totalStock = sizeVariants?.reduce(
+          (pre, acc) => pre + acc.quantity,
+          0
+        );
+        setTotalStock(Number(totalStock));
+      }
+    } else {
+      // Handle traditional variants
+      const res = Object?.keys(Object.assign({}, ...variants));
+      const varTitle = attribue?.filter((att) => res.includes(att._id));
+
+      if (variants?.length > 0) {
+        const totalStock = variants?.reduce(
+          (pre, acc) => pre + acc.quantity,
+          0
+        );
+        setTotalStock(Number(totalStock));
+      }
+      setVariantTitle(varTitle);
     }
-    setVariantTitle(varTitle);
-  }, [attribue, variants, language, lang]);
+  }, [attribue, variants, sizeVariants, language, lang]);
 
   //for adding attribute values
   const handleAddAtt = (v, el) => {
@@ -522,7 +599,7 @@ const useProductSubmit = (id) => {
 
   // handle notification for combination and extras
   const handleIsCombination = () => {
-    if ((isCombination && variantTitle.length) > 0) {
+    if (isCombination && (variantTitle.length > 0 || sizeVariants.length > 0)) {
       swal({
         title: "Are you sure to remove combination from this product!",
         text: "(It will be delete all your combination and extras)",
@@ -536,6 +613,7 @@ const useProductSubmit = (id) => {
           setTapValue("Basic Info");
           setVariants([]);
           setVariant([]);
+          setSizeVariants([]);
         }
       });
     } else {
@@ -696,6 +774,12 @@ const useProductSubmit = (id) => {
     handleSelectImage,
     handleSelectInlineImage,
     handleGenerateCombination,
+    sizeVariants,
+    setSizeVariants,
+    useSizeVariantSystem,
+    setUseSizeVariantSystem,
+    price,
+    originalPrice,
   };
 };
 

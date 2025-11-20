@@ -43,14 +43,22 @@ const ProductDetails = () => {
 
   useEffect(() => {
     if (!loading) {
-      const res = Object.keys(Object.assign({}, ...data?.variants));
-
-      const varTitle = attribue?.filter((att) =>
-        // res.includes(att.title.replace(/[^a-zA-Z0-9]/g, ''))
-        res.includes(att._id)
+      // Check if we have size variants
+      const hasSizeVariants = data?.variants?.some(
+        (v) => v.variantType === "size"
       );
 
-      setVariantTitle(varTitle);
+      if (hasSizeVariants) {
+        // For size variants, we don't need to match with attributes
+        setVariantTitle([]);
+      } else {
+        // Traditional variant handling
+        const res = Object.keys(Object.assign({}, ...data?.variants));
+
+        const varTitle = attribue?.filter((att) => res.includes(att._id));
+
+        setVariantTitle(varTitle);
+      }
     }
   }, [attribue, data?.variants, loading, lang]);
 
@@ -165,7 +173,7 @@ const ProductDetails = () => {
           </div>
         </div>
       )}
-      {data?.isCombination && variantTitle?.length > 0 && !loading && (
+      {data?.isCombination && data?.variants?.length > 0 && !loading && (
         <>
           <PageTitle>{t("ProductVariantList")}</PageTitle>
           <TableContainer className="mb-8 rounded-b-lg">
@@ -177,7 +185,7 @@ const ProductDetails = () => {
                   <TableCell>{t("Combination")}</TableCell>
                   <TableCell>{t("Sku")}</TableCell>
                   <TableCell>{t("Barcode")}</TableCell>
-                  <TableCell>{t("OrginalPrice")}</TableCell>
+                  <TableCell>{t("Price")}</TableCell>
                   <TableCell>{t("SalePrice")}</TableCell>
                   <TableCell>{t("Quantity")}</TableCell>
                 </tr>

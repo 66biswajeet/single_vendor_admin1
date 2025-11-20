@@ -23,13 +23,11 @@ const Invoice = ({ data, currency, getNumberTwo }) => {
               {item.quantity}{" "}
             </TableCell>
             <TableCell className="px-6 py-1 whitespace-nowrap font-bold text-center">
-              {currency}
-              {getNumberTwo(item.price)}
+              {currency} {getNumberTwo(item.price)}
             </TableCell>
 
             <TableCell className="px-6 py-1 whitespace-nowrap text-right font-bold text-red-500 dark:text-emerald-500">
-              {currency}
-              {getNumberTwo(item.itemTotal)}
+              {currency} {getNumberTwo(item.itemTotal)}
             </TableCell>
           </TableRow>
         ))}

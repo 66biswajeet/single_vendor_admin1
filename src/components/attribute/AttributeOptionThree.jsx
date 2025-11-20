@@ -4,7 +4,8 @@ import useUtilsFunction from "@/hooks/useUtilsFunction";
 import { FiPlus } from "react-icons/fi";
 import { notifySuccess, notifyError } from "@/utils/toast";
 
-const AttributeOptionTwo = ({
+// This component handles Color attribute selection (unchanged from original)
+const AttributeOptionThree = ({
   attributes,
   values,
   setValues,
@@ -14,7 +15,6 @@ const AttributeOptionTwo = ({
   const [selected, setSelected] = useState([]);
   const [showAddNew, setShowAddNew] = useState(false);
   const [newOptionName, setNewOptionName] = useState("");
-  const [newOptionColor, setNewOptionColor] = useState("#000000");
 
   const { showingTranslateValue } = useUtilsFunction();
 
@@ -85,7 +85,6 @@ const AttributeOptionTwo = ({
 
     notifySuccess(`Added "${newOptionName}" successfully`);
     setNewOptionName("");
-    setNewOptionColor("#000000");
     setShowAddNew(false);
   };
 
@@ -157,19 +156,19 @@ const AttributeOptionTwo = ({
           <button
             type="button"
             onClick={() => setShowAddNew(true)}
-            className="flex items-center text-xs text-emerald-600 hover:text-emerald-800 font-medium"
+            className="flex items-center text-xs text-brown-600 hover:text-brown-800 font-medium transition-colors"
           >
             <FiPlus className="mr-1" /> Add New Option
           </button>
         ) : (
-          <div className="border border-gray-300 rounded-lg p-3 mt-2 bg-gray-50">
+          <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-3 mt-2 bg-gray-50 dark:bg-gray-900">
             <div className="space-y-2">
               <input
                 type="text"
                 value={newOptionName}
                 onChange={(e) => setNewOptionName(e.target.value)}
                 placeholder="Enter option name (e.g., Red, Blue)"
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-brown-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                 onKeyPress={(e) => {
                   if (e.key === "Enter") {
                     e.preventDefault();
@@ -181,7 +180,7 @@ const AttributeOptionTwo = ({
                 <button
                   type="button"
                   onClick={handleAddNewOption}
-                  className="px-3 py-1.5 text-xs bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors"
+                  className="px-3 py-1.5 text-xs bg-brown-600 text-white rounded hover:bg-brown-700 transition-colors"
                 >
                   Add
                 </button>
@@ -190,9 +189,8 @@ const AttributeOptionTwo = ({
                   onClick={() => {
                     setShowAddNew(false);
                     setNewOptionName("");
-                    setNewOptionColor("#000000");
                   }}
-                  className="px-3 py-1.5 text-xs bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition-colors"
+                  className="px-3 py-1.5 text-xs bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 rounded hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
                 >
                   Cancel
                 </button>
@@ -205,4 +203,4 @@ const AttributeOptionTwo = ({
   );
 };
 
-export default AttributeOptionTwo;
+export default AttributeOptionThree;

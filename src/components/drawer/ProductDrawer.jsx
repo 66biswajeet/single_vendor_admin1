@@ -34,8 +34,10 @@ import Uploader from "@/components/image-uploader/Uploader";
 import ParentCategory from "@/components/category/ParentCategory";
 import UploaderThree from "@/components/image-uploader/UploaderThree";
 import AttributeOptionTwo from "@/components/attribute/AttributeOptionTwo";
+import AttributeOptionThree from "@/components/attribute/AttributeOptionThree";
 import AttributeListTable from "@/components/attribute/AttributeListTable";
 import SwitchToggleForCombination from "@/components/form/switch/SwitchToggleForCombination";
+import SizeVariantManager from "@/components/variant/SizeVariantManager";
 
 //internal import
 
@@ -87,9 +89,22 @@ const ProductDrawer = ({ id }) => {
     handleSelectImage,
     handleSelectInlineImage,
     handleGenerateCombination,
+    sizeVariants,
+    setSizeVariants,
+    useSizeVariantSystem,
+    setUseSizeVariantSystem,
+    price,
+    originalPrice,
   } = useProductSubmit(id);
 
   const { currency, showingTranslateValue } = useUtilsFunction();
+
+  // Handler to update size variants when pricing tiers are edited
+  const handleUpdateSizeVariant = (variantIndex, updatedVariant) => {
+    const updatedSizeVariants = [...sizeVariants];
+    updatedSizeVariants[variantIndex] = updatedVariant;
+    setSizeVariants(updatedSizeVariants);
+  };
 
   return (
     <>
@@ -387,50 +402,133 @@ const ProductDrawer = ({ id }) => {
               </div>
             ) : (
               <div className="p-6">
-                {/* <h4 className="mb-4 font-semibold text-lg">Variants</h4> */}
-                <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3 md:gap-3 xl:gap-3 lg:gap-2 mb-3">
-                  <MultiSelect
-                    options={attTitle}
-                    value={attributes}
-                    onChange={(v) => handleAddAtt(v)}
-                    labelledBy="Select"
-                  />
+                {/* Check if any selected attribute is Size-related */}
+                {(() => {
+                  const hasSizeAttribute = attributes?.some((attr) => {
+                    const titleStr =
+                      typeof attr?.title === "string"
+                        ? attr.title
+                        : attr?.title?.en || "";
+                    return titleStr.toLowerCase().includes("size");
+                  });
 
-                  {attributes?.map((attribute, i) => (
-                    <div key={attribute._id}>
-                      <div className="flex w-full h-10 justify-between font-sans rounded-tl rounded-tr bg-gray-200 px-4 py-3 text-left text-sm font-normal text-gray-700 hover:bg-gray-200">
-                        {"Select"}
-                        {showingTranslateValue(attribute?.title)}
+                  const hasColorAttribute = attributes?.some((attr) => {
+                    const titleStr =
+                      typeof attr?.title === "string"
+                        ? attr.title
+                        : attr?.title?.en || "";
+                    return titleStr.toLowerCase().includes("color");
+                  });
+
+                  // If Size attribute is selected, show new Size Variant Manager
+                  if (hasSizeAttribute) {
+                    return (
+                      <div>
+                        {/* Color Selection (if color attribute exists) */}
+                        {hasColorAttribute && (
+                          <div className="mb-6">
+                            <h4 className="mb-4 font-semibold text-lg text-gray-700 dark:text-gray-200">
+                              Select Colors
+                            </h4>
+                            <div className="grid md:grid-cols-2 sm:grid-cols-1 gap-4">
+                              {attributes
+                                ?.filter((attr) => {
+                                  const titleStr =
+                                    typeof attr?.title === "string"
+                                      ? attr.title
+                                      : attr?.title?.en || "";
+                                  return titleStr
+                                    .toLowerCase()
+                                    .includes("color");
+                                })
+                                .map((attribute, i) => (
+                                  <div key={attribute._id}>
+                                    <div className="flex w-full h-10 justify-between font-sans rounded-tl rounded-tr bg-brown-100 dark:bg-brown-900 px-4 py-3 text-left text-sm font-normal text-gray-700 dark:text-gray-200">
+                                      {"Select "}
+                                      {showingTranslateValue(attribute?.title)}
+                                    </div>
+                                    <AttributeOptionThree
+                                      id={i + 1}
+                                      values={values}
+                                      lang={language}
+                                      attributes={attribute}
+                                      setValues={setValues}
+                                    />
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Size Variant Manager */}
+                        <div className="mt-6">
+                          <h4 className="mb-4 font-semibold text-lg text-gray-700 dark:text-gray-200">
+                            Manage Size Variants
+                          </h4>
+                          <SizeVariantManager
+                            variants={sizeVariants}
+                            onVariantsChange={setSizeVariants}
+                            currency={currency}
+                            defaultPrice={price}
+                          />
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  // Otherwise, show traditional combination system
+                  return (
+                    <>
+                      <div className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-3 md:gap-3 xl:gap-3 lg:gap-2 mb-3">
+                        <MultiSelect
+                          options={attTitle}
+                          value={attributes}
+                          onChange={(v) => handleAddAtt(v)}
+                          labelledBy="Select"
+                        />
+
+                        {attributes?.map((attribute, i) => (
+                          <div key={attribute._id}>
+                            <div className="flex w-full h-10 justify-between font-sans rounded-tl rounded-tr bg-gray-200 px-4 py-3 text-left text-sm font-normal text-gray-700 hover:bg-gray-200">
+                              {"Select"}
+                              {showingTranslateValue(attribute?.title)}
+                            </div>
+
+                            <AttributeOptionTwo
+                              id={i + 1}
+                              values={values}
+                              lang={language}
+                              attributes={attribute}
+                              setValues={setValues}
+                            />
+                          </div>
+                        ))}
                       </div>
 
-                      <AttributeOptionTwo
-                        id={i + 1}
-                        values={values}
-                        lang={language}
-                        attributes={attribute}
-                        setValues={setValues}
-                      />
-                    </div>
-                  ))}
-                </div>
+                      <div className="flex justify-end mb-6">
+                        {attributes?.length > 0 && (
+                          <Button
+                            onClick={handleGenerateCombination}
+                            type="button"
+                            className="mx-2"
+                          >
+                            <span className="text-xs">
+                              {t("GenerateVariants")}
+                            </span>
+                          </Button>
+                        )}
 
-                <div className="flex justify-end mb-6">
-                  {attributes?.length > 0 && (
-                    <Button
-                      onClick={handleGenerateCombination}
-                      type="button"
-                      className="mx-2"
-                    >
-                      <span className="text-xs">{t("GenerateVariants")}</span>
-                    </Button>
-                  )}
-
-                  {variantTitle.length > 0 && (
-                    <Button onClick={handleClearVariant} className="mx-2">
-                      <span className="text-xs">{t("ClearVariants")}</span>
-                    </Button>
-                  )}
-                </div>
+                        {variantTitle.length > 0 && (
+                          <Button onClick={handleClearVariant} className="mx-2">
+                            <span className="text-xs">
+                              {t("ClearVariants")}
+                            </span>
+                          </Button>
+                        )}
+                      </div>
+                    </>
+                  );
+                })()}
               </div>
             ))}
 
@@ -453,7 +551,7 @@ const ProductDrawer = ({ id }) => {
 
         {tapValue === "Combination" &&
           isCombination &&
-          variantTitle.length > 0 && (
+          (variantTitle.length > 0 || sizeVariants.length > 0) && (
             <div className="px-6 overflow-x-auto">
               {/* {variants?.length >= 0 && ( */}
               {isCombination && (
@@ -465,8 +563,7 @@ const ProductDrawer = ({ id }) => {
                         <TableCell>{t("Combination")}</TableCell>
                         <TableCell>{t("Sku")}</TableCell>
                         <TableCell>{t("Barcode")}</TableCell>
-                        <TableCell>{t("Price")}</TableCell>
-                        <TableCell>{t("SalePrice")}</TableCell>
+                        <TableCell colSpan={2}>{t("Pricing")}</TableCell>
                         <TableCell>{t("QuantityTbl")}</TableCell>
                         <TableCell className="text-right">
                           {t("Action")}
@@ -476,7 +573,9 @@ const ProductDrawer = ({ id }) => {
 
                     <AttributeListTable
                       lang={language}
-                      variants={variants}
+                      variants={
+                        sizeVariants.length > 0 ? sizeVariants : variants
+                      }
                       setTapValue={setTapValue}
                       variantTitle={variantTitle}
                       isBulkUpdate={isBulkUpdate}
@@ -485,6 +584,7 @@ const ProductDrawer = ({ id }) => {
                       handleRemoveVariant={handleRemoveVariant}
                       handleQuantityPrice={handleQuantityPrice}
                       handleSelectInlineImage={handleSelectInlineImage}
+                      onUpdateSizeVariant={handleUpdateSizeVariant}
                     />
                   </Table>
                 </TableContainer>

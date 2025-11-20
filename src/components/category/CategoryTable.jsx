@@ -55,7 +55,10 @@ const CategoryTable = ({
 
       <TableBody>
         {categories?.map((category) => (
-          <TableRow key={category._id}>
+          <TableRow
+            key={category._id}
+            className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-150"
+          >
             <TableCell>
               <CheckBox
                 type="checkbox"
@@ -72,7 +75,7 @@ const CategoryTable = ({
             <TableCell>
               {category?.icon ? (
                 <Avatar
-                  className="hidden mr-3 md:block bg-gray-50 p-1"
+                  className="hidden mr-3 md:block bg-gray-50 border border-gray-200 dark:bg-gray-700 dark:border-gray-600 shadow-sm p-1"
                   src={category?.icon}
                   alt={category?.parent}
                 />
@@ -85,11 +88,11 @@ const CategoryTable = ({
               )}
             </TableCell>
 
-            <TableCell className="font-medium text-sm ">
+            <TableCell className="font-medium text-sm">
               {category?.children.length > 0 ? (
                 <Link
                   to={`/categories/${category?._id}`}
-                  className="text-blue-700"
+                  className="text-brown-700 hover:text-brown-800 font-medium transition-colors duration-150"
                 >
                   {showingTranslateValue(category?.name)}
 
@@ -97,18 +100,18 @@ const CategoryTable = ({
                     {showChild && (
                       <>
                         {" "}
-                        <div className="pl-2 ">
+                        <div className="pl-2 mt-2 space-y-1.5">
                           {category?.children?.map((child) => (
                             <div key={child._id}>
                               <Link
                                 to={`/categories/${child?._id}`}
                                 className="text-blue-700"
                               >
-                                <div className="flex text-xs items-center  text-blue-800">
-                                  <span className=" text-xs text-gray-500 pr-1">
+                                <div className="flex text-xs items-center text-gray-600 dark:text-gray-400 hover:text-brown-600 dark:hover:text-brown-400 transition-colors">
+                                  <span className="text-xs text-brown-500 pr-2">
                                     <IoRemoveSharp />
                                   </span>
-                                  <span className="text-gray-500">
+                                  <span>
                                     {showingTranslateValue(child.name)}
                                   </span>
                                 </div>
@@ -121,7 +124,9 @@ const CategoryTable = ({
                   </>
                 </Link>
               ) : (
-                <span>{showingTranslateValue(category?.name)}</span>
+                <span className="text-gray-700 dark:text-gray-300">
+                  {showingTranslateValue(category?.name)}
+                </span>
               )}
             </TableCell>
             <TableCell className="text-sm">
@@ -129,7 +134,7 @@ const CategoryTable = ({
                 <div>
                   <button
                     onClick={() => toggleRow(category._id)}
-                    className="flex items-center space-x-2 text-emerald-600 hover:text-emerald-800 font-medium transition-colors"
+                    className="flex items-center space-x-2 text-brown-600 hover:text-brown-700 font-medium transition-all duration-200 hover:scale-105"
                   >
                     {expandedRows[category._id] ? (
                       <FiChevronDown className="w-4 h-4" />
@@ -144,18 +149,18 @@ const CategoryTable = ({
                     </span>
                   </button>
                   {expandedRows[category._id] && (
-                    <div className="mt-2 ml-4 space-y-1.5 border-l-2 border-emerald-200 pl-3">
+                    <div className="mt-2 ml-4 space-y-1.5 border-l-2 border-brown-300 dark:border-brown-600 pl-3 animate-slideDown">
                       {category.children.map((child) => (
                         <div
                           key={child._id}
-                          className="flex items-center text-xs"
+                          className="flex items-center text-xs hover:translate-x-1 transition-transform duration-200"
                         >
-                          <span className="text-gray-400 pr-1.5">
+                          <span className="text-brown-400 pr-1.5">
                             <IoRemoveSharp />
                           </span>
                           <Link
                             to={`/categories/${child._id}`}
-                            className="text-blue-600 hover:text-blue-800 hover:underline"
+                            className="text-brown-600 hover:text-brown-800 dark:text-brown-400 dark:hover:text-brown-300 hover:underline"
                           >
                             {showingTranslateValue(child.name)}
                           </Link>

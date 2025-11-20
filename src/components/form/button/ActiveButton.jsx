@@ -5,8 +5,8 @@ const ActiveButton = ({ tapValue, activeValue, handleProductTap }) => {
     <button
       className={`inline-block px-4 py-2 text-base ${
         tapValue === activeValue &&
-        "text-emerald-600 border-emerald-600 dark:text-emerald-500 dark:border-emerald-500 rounded-t-lg border-b-2"
-      } focus:outline-none`}
+        "text-brown-700 border-brown-700 dark:text-brown-500 dark:border-brown-500 rounded-t-lg border-b-2 font-semibold"
+      } focus:outline-none transition-all duration-200`}
       aria-current="page"
       onClick={() => handleProductTap(activeValue, false, tapValue)}
     >

@@ -31,6 +31,10 @@ import PageTitle from "@/components/Typography/PageTitle";
 import { SidebarContext } from "@/context/SidebarContext";
 import OrderServices from "@/services/OrderServices";
 import AnimatedContent from "@/components/common/AnimatedContent";
+import SalesOverviewCard from "@/components/dashboard/SalesOverviewCard";
+import KeyMetrics from "@/components/dashboard/KeyMetrics";
+import OrderStatusChart from "@/components/dashboard/OrderStatusChart";
+import BestSellingProducts from "@/components/dashboard/BestSellingProducts";
 
 const Dashboard = () => {
   const { t } = useTranslation();
@@ -240,109 +244,64 @@ const Dashboard = () => {
       <PageTitle>{t("DashboardOverview")}</PageTitle>
 
       <AnimatedContent>
-        <div className="grid gap-2 mb-8 xl:grid-cols-5 md:grid-cols-2">
-          <CardItemTwo
-            mode={mode}
-            title="Today Order"
-            title2="TodayOrder"
-            Icon={ImStack}
-            cash={todayCashPayment || 0}
-            card={todayCardPayment || 0}
-            credit={todayCreditPayment || 0}
-            price={todayOrderAmount || 0}
-            className="text-white dark:text-emerald-100 bg-teal-600"
-            loading={loadingOrderAmount}
-          />
-
-          <CardItemTwo
-            mode={mode}
-            title="Yesterday Order"
-            title2="YesterdayOrder"
-            Icon={ImStack}
-            cash={yesterdayCashPayment || 0}
-            card={yesterdayCardPayment || 0}
-            credit={yesterdayCreditPayment || 0}
-            price={yesterdayOrderAmount || 0}
-            className="text-white dark:text-orange-100 bg-orange-400"
-            loading={loadingOrderAmount}
-          />
-
-          <CardItemTwo
-            mode={mode}
-            title2="ThisMonth"
-            Icon={FiShoppingCart}
-            price={dashboardOrderAmount?.thisMonthlyOrderAmount || 0}
-            className="text-white dark:text-emerald-100 bg-blue-500"
-            loading={loadingOrderAmount}
-          />
-
-          <CardItemTwo
-            mode={mode}
-            title2="LastMonth"
-            Icon={ImCreditCard}
-            loading={loadingOrderAmount}
-            price={dashboardOrderAmount?.lastMonthOrderAmount || 0}
-            className="text-white dark:text-teal-100 bg-cyan-600"
-          />
-
-          <CardItemTwo
-            mode={mode}
-            title2="AllTimeSales"
-            Icon={ImCreditCard}
-            price={dashboardOrderAmount?.totalAmount || 0}
-            className="text-white dark:text-emerald-100 bg-emerald-600"
-            loading={loadingOrderAmount}
-          />
+        {/* Top Section: Sales Overview + Key Metrics */}
+        <div className="grid gap-6 mb-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <SalesOverviewCard
+              mode={mode}
+              loading={loadingOrderAmount}
+              todayCash={todayCashPayment || 0}
+              todayCard={todayCardPayment || 0}
+              todayCredit={todayCreditPayment || 0}
+              todayOnline={0}
+              totalAmount={dashboardOrderAmount?.totalAmount || 0}
+              totalOrders={dashboardOrderCount?.totalOrder || 0}
+            />
+          </div>
+          <div>
+            <KeyMetrics
+              mode={mode}
+              loading={loadingOrderCount}
+              ordersPending={dashboardOrderCount?.totalPendingOrder?.count || 0}
+              totalOrders={dashboardOrderCount?.totalOrder || 0}
+            />
+          </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <CardItem
-            title="Total Order"
-            Icon={FiShoppingCart}
-            loading={loadingOrderCount}
-            quantity={dashboardOrderCount?.totalOrder || 0}
-            className="text-orange-600 dark:text-orange-100 bg-orange-100 dark:bg-orange-500"
-          />
-          <CardItem
-            title={t("OrderPending")}
-            Icon={FiRefreshCw}
-            loading={loadingOrderCount}
-            quantity={dashboardOrderCount?.totalPendingOrder?.count || 0}
-            amount={dashboardOrderCount?.totalPendingOrder?.total || 0}
-            className="text-blue-600 dark:text-blue-100 bg-blue-100 dark:bg-blue-500"
-          />
-          <CardItem
-            title={t("OrderProcessing")}
-            Icon={FiTruck}
-            loading={loadingOrderCount}
-            quantity={dashboardOrderCount?.totalProcessingOrder || 0}
-            className="text-teal-600 dark:text-teal-100 bg-teal-100 dark:bg-teal-500"
-          />
-          <CardItem
-            title={t("OrderDelivered")}
-            Icon={FiCheck}
-            loading={loadingOrderCount}
-            quantity={dashboardOrderCount?.totalDeliveredOrder || 0}
-            className="text-emerald-600 dark:text-emerald-100 bg-emerald-100 dark:bg-emerald-500"
-          />
-        </div>
+        {/* Middle Section: Financial Trends + Order Status + Best Selling */}
+        <div className="grid gap-6 mb-6 lg:grid-cols-3">
+          <div className="lg:col-span-1">
+            <ChartCard
+              mode={mode}
+              loading={loadingOrderAmount}
+              title={t("WeeklySales")}
+            >
+              <LineChart salesReport={salesReport} />
+            </ChartCard>
+          </div>
 
-        <div className="grid gap-4 md:grid-cols-2 my-8">
-          <ChartCard
-            mode={mode}
-            loading={loadingOrderAmount}
-            title={t("WeeklySales")}
-          >
-            <LineChart salesReport={salesReport} />
-          </ChartCard>
+          <div>
+            <OrderStatusChart
+              mode={mode}
+              loading={loadingOrderCount}
+              orderStatusData={{
+                total: dashboardOrderCount?.totalOrder || 0,
+                totalOrders: dashboardOrderCount?.totalOrder || 0,
+                pendingPreorder:
+                  dashboardOrderCount?.totalPendingOrder?.count || 0,
+                privatePreorder: dashboardOrderCount?.totalProcessingOrder || 0,
+                delivered: dashboardOrderCount?.totalDeliveredOrder || 0,
+              }}
+            />
+          </div>
 
-          <ChartCard
-            mode={mode}
-            loading={loadingBestSellerProduct}
-            title={t("BestSellingProducts")}
-          >
-            <PieChart data={bestSellerProductChart} />
-          </ChartCard>
+          <div>
+            <BestSellingProducts
+              mode={mode}
+              loading={loadingBestSellerProduct}
+              products={bestSellerProductChart?.bestSellingProduct || []}
+            />
+          </div>
         </div>
       </AnimatedContent>
 

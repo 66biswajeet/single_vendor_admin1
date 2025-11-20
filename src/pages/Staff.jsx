@@ -108,7 +108,10 @@ const Staff = () => {
               </div>
               <div className="mt-2 md:mt-0 flex items-center xl:gap-x-4 gap-x-1 flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
                 <div className="w-full mx-1">
-                  <Button type="submit" className="h-12 w-full bg-emerald-700">
+                  <Button
+                    type="submit"
+                    className="h-12 w-full bg-brown-600 hover:bg-brown-700 rounded-lg shadow-sm hover:shadow-md"
+                  >
                     Filter
                   </Button>
                 </div>

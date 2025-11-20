@@ -11,6 +11,13 @@ const notifySuccess = (message) =>
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
+    style: {
+      background: "#9a5533",
+      color: "#fff",
+    },
+    progressStyle: {
+      background: "#fff",
+    },
   });
 
 const notifyError = (message) =>
@@ -22,6 +29,13 @@ const notifyError = (message) =>
     pauseOnHover: true,
     draggable: true,
     progress: undefined,
+    style: {
+      background: "#7c3a26",
+      color: "#fff",
+    },
+    progressStyle: {
+      background: "#fff",
+    },
   });
 
 export { notifySuccess, notifyError };

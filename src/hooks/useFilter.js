@@ -202,13 +202,23 @@ const useFilter = (data) => {
     }
 
     if (categoryType) {
-      services = services.filter(
-        (search) =>
-          search?.name[lang]
+      services = services.filter((search) => {
+        // Search in category name
+        const categoryMatch =
+          search?.name?.[lang]
             ?.toLowerCase()
             ?.includes(categoryType?.toLowerCase()) ||
-          search?.category?.toLowerCase().includes(categoryType?.toLowerCase())
-      );
+          search?.category?.toLowerCase().includes(categoryType?.toLowerCase());
+
+        // Search in subcategories (children)
+        const subcategoryMatch = search?.children?.some((child) =>
+          child?.name?.[lang]
+            ?.toLowerCase()
+            ?.includes(categoryType?.toLowerCase())
+        );
+
+        return categoryMatch || subcategoryMatch;
+      });
     }
 
     //admin Filtering

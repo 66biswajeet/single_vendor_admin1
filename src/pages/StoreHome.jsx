@@ -257,195 +257,153 @@ const StoreHome = () => {
 
   return (
     <>
-      <div className="flex justify-between text-center items-center">
-        <div>
-          <PageTitle>{t("StoreCustomizationPageTitle")}</PageTitle>
-        </div>
-        <div className="pb-4">
-          <SelectLanguageTwo
-            register={register}
-            handleSelectLanguage={handleSelectLanguage}
-          />
-        </div>
-      </div>
+      <PageTitle>{t("StoreCustomizationPageTitle")}</PageTitle>
 
       <>
-        <ul className="sm:flex grid grid-cols-3 text-sm font-medium text-center text-gray-500 sm:divide-x divide-gray-200 rounded-lg dark:divide-gray-700 dark:text-gray-400 mb-5">
-          <li>
+        <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 gap-2 mb-5">
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=home-settings"}
-              className={`inline-block w-full px-4 py-3 shadow-md ${
+              className={`inline-block w-full px-4 py-3 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "home-settings" || location.search === ""
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500 sm:rounded-l-md rounded-tl-md`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("HomeSettings")}
               </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
-                {tabName === "home-settings" || location.search === ""
-                  ? "Home"
-                  : "Home"}
-              </span>
             </Link>
           </li>
 
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=single-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "single-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("SingleSetting")}
               </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
-                {"Setting"}
-              </span>
             </Link>
           </li>
 
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=about-us-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "about-us-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500 focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500 sm:rounded-tr-none rounded-tr-md`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("AboutUsSetting")}
               </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
-                {"About"}
-              </span>
             </Link>
           </li>
 
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=privacy-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "privacy-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("PrivacyTCSetting")}
               </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
-                {"Privacy"}
-              </span>
             </Link>
           </li>
 
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=FAQ-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "FAQ-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
-                {t("FAQSetting")}
-              </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("FAQSetting")}
               </span>
             </Link>
           </li>
 
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=offers-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "offers-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
-                {t("OffersStting")}
-              </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("OffersStting")}
               </span>
             </Link>
           </li>
 
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=contact-us-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "contact-us-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500 sm:rounded-bl-none rounded-bl-md`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("ContactUsStting")}
               </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
-                Contact
-              </span>
             </Link>
           </li>
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=checkout-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "checkout-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500 sm:rounded-bl-none rounded-bl-md`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
-                {t("Checkout")}
-              </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("Checkout")}
               </span>
             </Link>
           </li>
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=dashboard-setting"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "dashboard-setting"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500 sm:rounded-bl-none rounded-bl-md`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("DashboardSetting")}
-              </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
-                {t("Dashboard")}
               </span>
             </Link>
           </li>
-          <li>
+          <li className="flex-grow min-w-[120px]">
             <Link
               to={"/store/customization?storeTab=seo-settings"}
-              className={`inline-block w-full py-3 px-4 shadow-md ${
+              className={`inline-block w-full py-3 px-4 rounded-lg transition-all duration-200 whitespace-nowrap ${
                 tabName === "seo-settings"
-                  ? "bg-emerald-500 text-white dark:bg-emerald-500 dark:text-white"
-                  : "bg-gray-200 text-gray-800 font-medium dark:bg-gray-600 dark:text-gray-300"
-              } hover:text-white hover:bg-emerald-500  focus:outline-none dark:hover:text-white dark:hover:bg-emerald-500`}
+                  ? "bg-brown-600 text-white shadow-lg transform scale-105 dark:bg-brown-600"
+                  : "bg-white text-gray-700 font-medium shadow-sm hover:shadow-md dark:bg-gray-700 dark:text-gray-200"
+              } hover:text-white hover:bg-brown-700 focus:outline-none dark:hover:bg-brown-700`}
             >
-              <span className="text-sm font-medium font-serif xl:inline-block hidden">
+              <span className="text-sm font-semibold font-serif">
                 {t("SeoSetting")}
-              </span>
-              <span className="text-sm font-medium font-serif xl:hidden">
-                {"Seo"}
               </span>
             </Link>
           </li>

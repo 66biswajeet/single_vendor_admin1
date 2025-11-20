@@ -121,14 +121,12 @@ const CategoryDrawer = ({ id, data }) => {
         {id ? (
           <Title
             register={register}
-            handleSelectLanguage={handleSelectLanguage}
             title={t("UpdateCategory")}
             description={t("UpdateCategoryDescription")}
           />
         ) : (
           <Title
             register={register}
-            handleSelectLanguage={handleSelectLanguage}
             title={t("AddCategoryTitle")}
             description={t("AddCategoryDescription")}
           />

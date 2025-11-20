@@ -116,14 +116,12 @@ const ProductDrawer = ({ id }) => {
         {id ? (
           <Title
             register={register}
-            handleSelectLanguage={handleSelectLanguage}
             title={t("UpdateProduct")}
             description={t("UpdateProductDescription")}
           />
         ) : (
           <Title
             register={register}
-            handleSelectLanguage={handleSelectLanguage}
             title={t("DrawerAddProduct")}
             description={t("AddProductDescription")}
           />

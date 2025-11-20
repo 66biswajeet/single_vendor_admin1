@@ -176,12 +176,12 @@ const Category = () => {
                 <Input
                   ref={categoryRef}
                   type="search"
-                  placeholder={t("SearchCategory")}
+                  placeholder="Search by Category and Sub Category"
                 />
               </div>
               <div className="flex items-center gap-2 flex-grow-0 md:flex-grow lg:flex-grow xl:flex-grow">
                 <div className="w-full mx-1">
-                  <Button type="submit" className="h-12 w-full bg-emerald-700">
+                  <Button type="submit" className="h-12 w-full bg-brown-600 hover:bg-brown-700 rounded-lg shadow-sm hover:shadow-md">
                     Filter
                   </Button>
                 </div>
@@ -230,7 +230,7 @@ const Category = () => {
                 <TableCell>{t("catIdTbl")}</TableCell>
                 <TableCell>{t("catIconTbl")}</TableCell>
                 <TableCell>{t("CatTbName")}</TableCell>
-                <TableCell>{t("CatTbDescription")}</TableCell>
+                <TableCell>Sub Category</TableCell>
                 <TableCell className="text-center">
                   {t("catPublishedTbl")}
                 </TableCell>

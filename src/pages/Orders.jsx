@@ -209,8 +209,8 @@ const Orders = () => {
                       type="button"
                       className={`${
                         (data?.orders?.length <= 0 || loadingExport) &&
-                        "opacity-50 cursor-not-allowed bg-emerald-600"
-                      } flex items-center justify-center text-sm leading-5 h-12 w-full text-center transition-colors duration-150 font-medium px-6 py-2 rounded-md text-white bg-emerald-500 border border-transparent active:bg-emerald-600 hover:bg-emerald-600 `}
+                        "opacity-50 cursor-not-allowed bg-brown-600"
+                      } flex items-center justify-center text-sm leading-5 h-12 w-full text-center transition-colors duration-150 font-medium px-6 py-2 rounded-lg text-white bg-brown-600 border border-transparent active:bg-brown-700 hover:bg-brown-700 shadow-sm hover:shadow-md `}
                     >
                       Download All Orders
                       <span className="ml-2 text-base">
@@ -244,7 +244,7 @@ const Orders = () => {
                     <Label style={{ visibility: "hidden" }}>Filter</Label>
                     <Button
                       type="submit"
-                      className="h-12 w-full bg-emerald-700"
+                      className="h-12 w-full bg-brown-600 hover:bg-brown-700 rounded-lg shadow-sm hover:shadow-md"
                     >
                       Filter
                     </Button>

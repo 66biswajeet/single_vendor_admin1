@@ -201,6 +201,10 @@ const StoreHome = () => {
     isSubmitting,
     // showChild,
     setTermsConditionsTextEdit,
+    showcaseEnabled,
+    setShowcaseEnabled,
+    showcaseRightImage,
+    setShowcaseRightImage,
   } = useStoreHomeSubmit();
 
   useEffect(() => {
@@ -502,6 +506,10 @@ const StoreHome = () => {
                   couponList={couponList}
                   setCouponList={setCouponList}
                   isSubmitting={isSubmitting}
+                  showcaseEnabled={showcaseEnabled}
+                  setShowcaseEnabled={setShowcaseEnabled}
+                  showcaseRightImage={showcaseRightImage}
+                  setShowcaseRightImage={setShowcaseRightImage}
                 />
               </form>
             </div>

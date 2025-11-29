@@ -125,6 +125,10 @@ const useStoreHomeSubmit = () => {
     useState("");
   const [termsConditionsHeaderBg, setTermsConditionsHeaderBg] = useState("");
 
+  // Best Selling Showcase states
+  const [showcaseEnabled, setShowcaseEnabled] = useState(true);
+  const [showcaseRightImage, setShowcaseRightImage] = useState("");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { handleDisableForDemo } = useDisableForDemo();
 
@@ -317,6 +321,32 @@ const useStoreHomeSubmit = () => {
             daily_need_img_right: getYourDailyNeedImageRight,
             button1_img: getButton1image,
             button2_img: getButton2image,
+
+            // Best Selling Showcase settings
+            home_showcase: {
+              enabled: showcaseEnabled,
+              left_title: handleRemoveEmptyKey({
+                ...resData?.home?.home_showcase?.left_title,
+                [language]: data.showcase_left_title || "",
+              }),
+              center_title: handleRemoveEmptyKey({
+                ...resData?.home?.home_showcase?.center_title,
+                [language]: data.showcase_center_title || "",
+              }),
+              right_title: handleRemoveEmptyKey({
+                ...resData?.home?.home_showcase?.right_title,
+                [language]: data.showcase_right_title || "",
+              }),
+              right_subtitle: handleRemoveEmptyKey({
+                ...resData?.home?.home_showcase?.right_subtitle,
+                [language]: data.showcase_right_subtitle || "",
+              }),
+              right_button_text: handleRemoveEmptyKey({
+                ...resData?.home?.home_showcase?.right_button_text,
+                [language]: data.showcase_right_button_text || "",
+              }),
+              right_image: showcaseRightImage,
+            },
           },
           about_us: {
             header_status: aboutPageHeader,
@@ -1258,6 +1288,31 @@ const useStoreHomeSubmit = () => {
           setValue("daily_need_app_link", res?.home?.daily_need_app_link);
           setValue("daily_need_google_link", res?.home?.daily_need_google_link);
 
+          // showcase
+          setShowcaseEnabled(res?.home?.home_showcase?.enabled !== false);
+          setValue(
+            "showcase_left_title",
+            res?.home?.home_showcase?.left_title?.[language || "en"] || ""
+          );
+          setValue(
+            "showcase_center_title",
+            res?.home?.home_showcase?.center_title?.[language || "en"] || ""
+          );
+          setValue(
+            "showcase_right_title",
+            res?.home?.home_showcase?.right_title?.[language || "en"] || ""
+          );
+          setValue(
+            "showcase_right_subtitle",
+            res?.home?.home_showcase?.right_subtitle?.[language || "en"] || ""
+          );
+          setValue(
+            "showcase_right_button_text",
+            res?.home?.home_showcase?.right_button_text?.[language || "en"] ||
+              ""
+          );
+          setShowcaseRightImage(res?.home?.home_showcase?.right_image);
+
           //slider
           setSliderImage(res?.slider?.first_img);
           setSliderImageTwo(res?.slider?.second_img);
@@ -2159,6 +2214,10 @@ const useStoreHomeSubmit = () => {
     termsConditionsTextEdit,
     setTermsConditionsTextEdit,
     isSubmitting,
+    showcaseEnabled,
+    setShowcaseEnabled,
+    showcaseRightImage,
+    setShowcaseRightImage,
   };
 };
 

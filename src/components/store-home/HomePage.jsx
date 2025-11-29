@@ -109,6 +109,10 @@ const HomePage = ({
   termsConditionsMenuLink,
   couponList,
   setCouponList,
+  showcaseEnabled,
+  setShowcaseEnabled,
+  showcaseRightImage,
+  setShowcaseRightImage,
 }) => {
   const { mode } = useContext(WindmillContext);
   const { t } = useTranslation();
@@ -1780,6 +1784,144 @@ const HomePage = ({
                     placeholder="Upto 20% Off"
                   />
                   <Error errorName={errors.promo_offer} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/*  ====================================================== Best Selling Showcase Section ====================================================== */}
+        <div className="col-span-12 md:col-span-12 lg:col-span-12 md:mt-0 mt-10">
+          <div className="inline-flex md:text-lg text-base text-gray-800 font-semibold dark:text-gray-400 mb-3">
+            <FiSettings className="mt-1 mr-2" /> Best Selling Showcase
+          </div>
+
+          <hr className="md:mb-12 mb-3" />
+
+          <div className="xl:px-10 flex-grow scrollbar-hide w-full max-h-full pb-0">
+            <div className="inline-flex md:text-base text-sm mb-3 text-gray-500 dark:text-gray-400 relative">
+              <strong>Showcase Settings</strong>
+            </div>
+            <hr className="md:mb-12 mb-3" />
+
+            <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-3">
+              <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                Enable Showcase
+              </label>
+              <div className="sm:col-span-4">
+                <SwitchToggle
+                  title=""
+                  handleProcess={setShowcaseEnabled}
+                  processOption={showcaseEnabled}
+                  name={showcaseEnabled}
+                />
+              </div>
+            </div>
+
+            <div
+              style={{
+                height: showcaseEnabled ? "auto" : 0,
+                transition: "all 0.5s",
+                visibility: !showcaseEnabled ? "hidden" : "visible",
+                opacity: !showcaseEnabled ? "0" : "1",
+              }}
+            >
+              {/* Left Column Title */}
+              <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-4">
+                <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  Left Column Title
+                </label>
+                <div className="sm:col-span-4">
+                  <InputAreaTwo
+                    register={register}
+                    label="Left Column Title"
+                    name="showcase_left_title"
+                    type="text"
+                    placeholder="BEST SELLING STICKERS"
+                  />
+                  <Error errorName={errors.showcase_left_title} />
+                </div>
+              </div>
+
+              {/* Center Column Title */}
+              <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-4">
+                <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  Center Column Title
+                </label>
+                <div className="sm:col-span-4">
+                  <InputAreaTwo
+                    register={register}
+                    label="Center Column Title"
+                    name="showcase_center_title"
+                    type="text"
+                    placeholder="TRENDING IN YOUR AREA"
+                  />
+                  <Error errorName={errors.showcase_center_title} />
+                </div>
+              </div>
+
+              {/* Right Column Title */}
+              <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-4">
+                <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  Right Column Title
+                </label>
+                <div className="sm:col-span-4">
+                  <InputAreaTwo
+                    register={register}
+                    label="Right Column Title"
+                    name="showcase_right_title"
+                    type="text"
+                    placeholder="Shop your"
+                  />
+                  <Error errorName={errors.showcase_right_title} />
+                </div>
+              </div>
+
+              {/* Right Column Subtitle */}
+              <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-4">
+                <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  Right Column Subtitle
+                </label>
+                <div className="sm:col-span-4">
+                  <InputAreaTwo
+                    register={register}
+                    label="Right Column Subtitle"
+                    name="showcase_right_subtitle"
+                    type="text"
+                    placeholder="sticker needs"
+                  />
+                  <Error errorName={errors.showcase_right_subtitle} />
+                </div>
+              </div>
+
+              {/* Right Column Button Text */}
+              <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-4">
+                <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  Button Text
+                </label>
+                <div className="sm:col-span-4">
+                  <InputAreaTwo
+                    register={register}
+                    label="Button Text"
+                    name="showcase_right_button_text"
+                    type="text"
+                    placeholder="shop now"
+                  />
+                  <Error errorName={errors.showcase_right_button_text} />
+                </div>
+              </div>
+
+              {/* Right Column Background Image */}
+              <div className="grid md:grid-cols-5 sm:grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 md:mb-6 mb-4">
+                <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  Right Column Background Image
+                </label>
+                <div className="sm:col-span-4">
+                  <Uploader
+                    imageUrl={showcaseRightImage}
+                    setImageUrl={setShowcaseRightImage}
+                    folder="storeCustomization"
+                  />
                 </div>
               </div>
             </div>

@@ -22,6 +22,7 @@ const Setting = lazy(() => import("@/pages/Setting"));
 const StoreHome = lazy(() => import("@/pages/StoreHome"));
 const StoreSetting = lazy(() => import("@/pages/StoreSetting"));
 const Notifications = lazy(() => import("@/pages/Notifications"));
+const CustomProducts = lazy(() => import("@/pages/CustomProducts.jsx"));
 /*
 //  * ⚠ These are internal routes!
 //  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -86,6 +87,10 @@ const routes = [
     path: "/coupons",
     component: Coupons,
   },
+  {
+    path: "/custom-products",
+    component: CustomProducts,
+  },
   { path: "/settings", component: Setting },
   {
     path: "/store/customization",
@@ -123,6 +128,7 @@ const routeAccessList = [
   { label: "Categories", value: "categories" },
   { label: "Attributes", value: "attributes" },
   { label: "Coupons", value: "coupons" },
+  { label: "Custom Products", value: "custom-products" },
   { label: "Customers", value: "customers" },
   { label: "Orders", value: "orders" },
   { label: "Staff", value: "our-staff" },

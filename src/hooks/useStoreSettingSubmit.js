@@ -21,6 +21,8 @@ const useStoreSettingSubmit = (id) => {
   const [enabledGithubLogin, setEnabledGithubLogin] = useState(false);
   const [enabledFacebookLogin, setEnabledFacebookLogin] = useState(false);
   const [enabledGoogleAnalytics, setEnabledGoogleAnalytics] = useState(false);
+  const [enabledFirebase, setEnabledFirebase] = useState(false);
+  const [enabledStallion, setEnabledStallion] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -67,6 +69,20 @@ const useStoreSettingSubmit = (id) => {
           tawk_chat_status: enabledTawkChat,
           tawk_chat_property_id: data.tawk_chat_property_id,
           tawk_chat_widget_id: data.tawk_chat_widget_id,
+          firebase_status: enabledFirebase,
+          firebase_api_key: data.firebase_api_key,
+          firebase_auth_domain: data.firebase_auth_domain,
+          firebase_project_id: data.firebase_project_id,
+          firebase_storage_bucket: data.firebase_storage_bucket,
+          firebase_messaging_sender_id: data.firebase_messaging_sender_id,
+          firebase_app_id: data.firebase_app_id,
+          firebase_measurement_id: data.firebase_measurement_id,
+          stallion_status: enabledStallion,
+          stallion_api_key_sandbox: data.stallion_api_key_sandbox,
+          stallion_api_key_prod: data.stallion_api_key_prod,
+          stallion_base_url_sandbox: data.stallion_base_url_sandbox,
+          stallion_base_url_prod: data.stallion_base_url_prod,
+          stallion_webhook_secret: data.stallion_webhook_secret,
         },
       };
 
@@ -110,6 +126,8 @@ const useStoreSettingSubmit = (id) => {
           setEnabledGithubLogin(res.github_login_status);
           setEnabledFacebookLogin(res.facebook_login_status);
           setEnabledGoogleAnalytics(res.google_analytic_status);
+          setEnabledFirebase(res.firebase_status);
+          setEnabledStallion(res.stallion_status);
           setValue("stripe_key", res.stripe_key);
           setValue("stripe_secret", res.stripe_secret);
           setValue("razorpay_id", res.razorpay_id);
@@ -126,6 +144,21 @@ const useStoreSettingSubmit = (id) => {
           setValue("fb_pixel_key", res.fb_pixel_key);
           setValue("tawk_chat_property_id", res.tawk_chat_property_id);
           setValue("tawk_chat_widget_id", res.tawk_chat_widget_id);
+          setValue("firebase_api_key", res.firebase_api_key);
+          setValue("firebase_auth_domain", res.firebase_auth_domain);
+          setValue("firebase_project_id", res.firebase_project_id);
+          setValue("firebase_storage_bucket", res.firebase_storage_bucket);
+          setValue(
+            "firebase_messaging_sender_id",
+            res.firebase_messaging_sender_id
+          );
+          setValue("firebase_app_id", res.firebase_app_id);
+          setValue("firebase_measurement_id", res.firebase_measurement_id);
+          setValue("stallion_api_key_sandbox", res.stallion_api_key_sandbox);
+          setValue("stallion_api_key_prod", res.stallion_api_key_prod);
+          setValue("stallion_base_url_sandbox", res.stallion_base_url_sandbox);
+          setValue("stallion_base_url_prod", res.stallion_base_url_prod);
+          setValue("stallion_webhook_secret", res.stallion_webhook_secret);
         }
       } catch (err) {
         notifyError(err?.response?.data?.message || err.message);
@@ -148,6 +181,10 @@ const useStoreSettingSubmit = (id) => {
     setEnabledCOD,
     enabledStripe,
     setEnabledStripe,
+    enabledFirebase,
+    setEnabledFirebase,
+    enabledStallion,
+    setEnabledStallion,
     enabledRazorPay,
     setEnabledRazorPay,
     enabledFbPixel,

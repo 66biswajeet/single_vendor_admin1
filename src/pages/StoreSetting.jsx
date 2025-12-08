@@ -37,6 +37,10 @@ const StoreSetting = () => {
     setEnabledFacebookLogin,
     enabledGoogleAnalytics,
     setEnabledGoogleAnalytics,
+    enabledFirebase,
+    setEnabledFirebase,
+    enabledStallion,
+    setEnabledStallion,
   } = useStoreSettingSubmit();
 
   const handleEnableDisableMethod = (checked, event, id) => {
@@ -66,7 +70,222 @@ const StoreSetting = () => {
               isSubmitting={isSubmitting}
             >
               <div className="flex-grow scrollbar-hide w-full max-h-full">
+                {/* Firebase Configuration Section */}
                 <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                    Enable Firebase Config
+                  </label>
+                  <div className="sm:col-span-4">
+                    <SwitchToggle
+                      id="firebase"
+                      processOption={enabledFirebase}
+                      handleProcess={setEnabledFirebase}
+                    />
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    height: enabledFirebase ? "auto" : 0,
+                    transition: "all .6s",
+                    visibility: !enabledFirebase ? "hidden" : "visible",
+                    opacity: !enabledFirebase ? "0" : "1",
+                  }}
+                  className={`${enabledFirebase ? "mb-8" : "mb-2"}`}
+                >
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Firebase API Key" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledFirebase}
+                        register={register}
+                        label="Firebase API Key"
+                        name="firebase_api_key"
+                        type="password"
+                        placeholder="AIzaSy..."
+                      />
+                      <Error errorName={errors.firebase_api_key} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Firebase Auth Domain" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledFirebase}
+                        register={register}
+                        label="Firebase Auth Domain"
+                        name="firebase_auth_domain"
+                        type="text"
+                        placeholder="your-app.firebaseapp.com"
+                      />
+                      <Error errorName={errors.firebase_auth_domain} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Firebase Project ID" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledFirebase}
+                        register={register}
+                        label="Firebase Project ID"
+                        name="firebase_project_id"
+                        type="text"
+                        placeholder="your-project-id"
+                      />
+                      <Error errorName={errors.firebase_project_id} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Firebase Storage Bucket" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledFirebase}
+                        register={register}
+                        label="Firebase Storage Bucket"
+                        name="firebase_storage_bucket"
+                        type="text"
+                        placeholder="your-app.firebasestorage.app"
+                      />
+                      <Error errorName={errors.firebase_storage_bucket} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Firebase Messaging Sender ID" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledFirebase}
+                        register={register}
+                        label="Firebase Messaging Sender ID"
+                        name="firebase_messaging_sender_id"
+                        type="text"
+                        placeholder="123456789"
+                      />
+                      <Error errorName={errors.firebase_messaging_sender_id} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Firebase App ID" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledFirebase}
+                        register={register}
+                        label="Firebase App ID"
+                        name="firebase_app_id"
+                        type="password"
+                        placeholder="1:123456789:web:abc123"
+                      />
+                      <Error errorName={errors.firebase_app_id} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6">
+                    <Label label="Firebase Measurement ID" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Firebase Measurement ID"
+                        name="firebase_measurement_id"
+                        type="text"
+                        placeholder="G-XXXXXXXXXX (Optional)"
+                      />
+                      <Error errorName={errors.firebase_measurement_id} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stallion Express Configuration Section */}
+                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                    Enable Stallion Express Shipping
+                  </label>
+                  <div className="sm:col-span-4">
+                    <SwitchToggle
+                      id="stallion"
+                      processOption={enabledStallion}
+                      handleProcess={setEnabledStallion}
+                    />
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    height: enabledStallion ? "auto" : 0,
+                    transition: "all .6s",
+                    visibility: !enabledStallion ? "hidden" : "visible",
+                    opacity: !enabledStallion ? "0" : "1",
+                  }}
+                  className={`${enabledStallion ? "mb-8" : "mb-2"}`}
+                >
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Stallion Sandbox API Key" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledStallion}
+                        register={register}
+                        label="Stallion Sandbox API Key"
+                        name="stallion_api_key_sandbox"
+                        type="password"
+                        placeholder="Your Sandbox API Key"
+                      />
+                      <Error errorName={errors.stallion_api_key_sandbox} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Stallion Production API Key" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledStallion}
+                        register={register}
+                        label="Stallion Production API Key"
+                        name="stallion_api_key_prod"
+                        type="password"
+                        placeholder="Your Production API Key"
+                      />
+                      <Error errorName={errors.stallion_api_key_prod} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Stallion Sandbox Base URL" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Stallion Sandbox Base URL"
+                        name="stallion_base_url_sandbox"
+                        type="text"
+                        placeholder="https://sandbox.stallionexpress.ca/api/v4/"
+                      />
+                      <Error errorName={errors.stallion_base_url_sandbox} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Stallion Production Base URL" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Stallion Production Base URL"
+                        name="stallion_base_url_prod"
+                        type="text"
+                        placeholder="https://ship.stallionexpress.ca/api/v4/"
+                      />
+                      <Error errorName={errors.stallion_base_url_prod} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6">
+                    <Label label="Stallion Webhook Secret" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        register={register}
+                        label="Stallion Webhook Secret"
+                        name="stallion_webhook_secret"
+                        type="password"
+                        placeholder="Your Webhook Secret (Optional)"
+                      />
+                      <Error errorName={errors.stallion_webhook_secret} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  "
                   <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
                     {t("EnableCOD")} <br />
                     <span className="text-xs font-normal text-gray-600 dark:text-gray-400">

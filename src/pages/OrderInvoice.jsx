@@ -232,6 +232,79 @@ const OrderInvoice = () => {
                 </span>
               </div>
             </div>
+
+            {/* Shipment Information */}
+            {data.shipment && data.shipment.trackingId && (
+              <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <h3 className="font-bold font-serif text-base uppercase text-gray-700 dark:text-gray-400 mb-4">
+                  Shipment Information
+                </h3>
+                <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                  <div className="flex flex-col">
+                    <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
+                      Carrier
+                    </span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                      {data.shipment.provider || "Stallion Express"}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
+                      Service
+                    </span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">
+                      {data.shipment.service || "Standard"}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
+                      Tracking Number
+                    </span>
+                    <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                      {data.shipment.trackingId}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
+                      Status
+                    </span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300 capitalize">
+                      {data.shipment.status || "Pending"}
+                    </span>
+                  </div>
+                  {data.shipment.labelUrl && (
+                    <div className="flex flex-col">
+                      <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
+                        Shipping Label
+                      </span>
+                      <a
+                        href={data.shipment.labelUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                      >
+                        Download Label
+                      </a>
+                    </div>
+                  )}
+                  {data.shipment.trackingUrl && (
+                    <div className="flex flex-col">
+                      <span className="mb-1 font-semibold text-sm text-gray-600 dark:text-gray-500">
+                        Track Shipment
+                      </span>
+                      <a
+                        href={data.shipment.trackingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                      >
+                        Track Package
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

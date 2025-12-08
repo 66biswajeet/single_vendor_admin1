@@ -371,22 +371,6 @@ const SizeVariantManager = ({
           </div>
         </div>
 
-        {/* Stock Quantity */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">
-            Stock Quantity
-          </label>
-          <Input
-            type="number"
-            value={currentSize.quantity === "" ? "" : currentSize.quantity}
-            onChange={(e) =>
-              setCurrentSize({ ...currentSize, quantity: e.target.value })
-            }
-            placeholder="Total available stock"
-            className="w-full"
-          />
-        </div>
-
         {/* Action Buttons */}
         <div className="flex gap-3 mb-6">
           <Button
@@ -445,7 +429,7 @@ const SizeVariantManager = ({
                     </h4>
                     <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                       SKU: {variant.sku || "N/A"} | Barcode:{" "}
-                      {variant.barcode || "N/A"} | Stock: {variant.quantity}
+                      {variant.barcode || "N/A"}
                     </div>
                   </div>
                   <div className="flex gap-2">

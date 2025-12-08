@@ -42,10 +42,10 @@ const sidebar = [
         path: "/coupons",
         name: "Coupons",
       },
-      {
-        path: "/custom-products",
-        name: "Custom Products",
-      },
+      // {
+      //   path: "/custom-products",
+      //   name: "Custom Products",
+      // },
     ],
   },
 

@@ -228,16 +228,6 @@ const ProductTable = ({ products, isCheck, setIsCheck }) => {
             </TableCell>
 
             <TableCell>
-              <span className="text-sm">{product.stock}</span>
-            </TableCell>
-            <TableCell>
-              {product.stock > 0 ? (
-                <Badge type="success">{t("Selling")}</Badge>
-              ) : (
-                <Badge type="danger">{t("SoldOut")}</Badge>
-              )}
-            </TableCell>
-            <TableCell>
               <Link
                 to={`/product/${product._id}`}
                 className="flex justify-center text-gray-400 hover:text-emerald-600"

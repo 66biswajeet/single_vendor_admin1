@@ -1,5 +1,7 @@
+import React, { useState } from "react";
 import { Button, Select } from "@windmill/react-ui";
 import { useTranslation } from "react-i18next";
+import { FiPlus, FiTrash2 } from "react-icons/fi";
 
 //internal import
 
@@ -10,8 +12,30 @@ import SelectTimeZone from "@/components/form/selectOption/SelectTimeZone";
 import SelectCurrency from "@/components/form/selectOption/SelectCurrency";
 import SelectReceiptSize from "@/components/form/selectOption/SelectPrintSize";
 
-const CommonSetting = ({ errors, register, isSave, isSubmitting }) => {
+const CommonSetting = ({
+  errors,
+  register,
+  isSave,
+  isSubmitting,
+  footerLinks,
+  setFooterLinks,
+}) => {
   const { t } = useTranslation();
+
+  const handleAddLink = () => {
+    setFooterLinks([...footerLinks, { title: "", url: "" }]);
+  };
+
+  const handleRemoveLink = (index) => {
+    const newLinks = footerLinks.filter((_, i) => i !== index);
+    setFooterLinks(newLinks);
+  };
+
+  const handleLinkChange = (index, field, value) => {
+    const newLinks = [...footerLinks];
+    newLinks[index] = { ...newLinks[index], [field]: value };
+    setFooterLinks(newLinks);
+  };
 
   return (
     <div className="grid grid-cols-12 font-sans">
@@ -228,6 +252,82 @@ const CommonSetting = ({ errors, register, isSave, isSubmitting }) => {
               <Error errorName={errors.website} />
             </div>
           </div>
+
+          {/* Footer Page Links Section */}
+          <div className="mt-8 mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                {t("FooterPageLinks")}
+              </h3>
+              <Button
+                type="button"
+                onClick={handleAddLink}
+                className="h-10 px-4"
+              >
+                <FiPlus className="mr-2" />
+                {t("AddLink")}
+              </Button>
+            </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+              Add custom page links to appear in the footer section.
+            </p>
+
+            {footerLinks && footerLinks.length > 0 && (
+              <div className="space-y-4 mb-6">
+                {footerLinks.map((link, index) => (
+                  <div
+                    key={index}
+                    className="p-4 border border-gray-200 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700"
+                  >
+                    <div className="flex justify-between items-start mb-3">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        Link {index + 1}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveLink(index)}
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        <FiTrash2 size={16} />
+                      </button>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm mb-1 text-gray-600 dark:text-gray-400">
+                          Link Title
+                        </label>
+                        <input
+                          type="text"
+                          value={link.title}
+                          onChange={(e) =>
+                            handleLinkChange(index, "title", e.target.value)
+                          }
+                          placeholder="e.g., About Us, Terms & Conditions"
+                          className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 dark:bg-gray-600 dark:text-gray-200"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm mb-1 text-gray-600 dark:text-gray-400">
+                          Link URL
+                        </label>
+                        <input
+                          type="text"
+                          value={link.url}
+                          onChange={(e) =>
+                            handleLinkChange(index, "url", e.target.value)
+                          }
+                          placeholder="e.g., /pages/about-us"
+                          className="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-400 dark:bg-gray-600 dark:text-gray-200"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           <div className="flex flex-row-reverse pb-6">
             {isSubmitting ? (
               <Button disabled={true} type="button" className="h-12">

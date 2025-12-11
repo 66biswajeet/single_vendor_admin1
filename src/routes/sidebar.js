@@ -6,6 +6,7 @@ import {
   FiSettings,
   FiSlack,
   FiTarget,
+  FiPieChart,
 } from "react-icons/fi";
 
 /**
@@ -72,6 +73,11 @@ const sidebar = [
     name: "Settings",
   },
   {
+    path: "/cookie-analytics",
+    icon: FiPieChart,
+    name: "Cookie Analytics",
+  },
+  {
     icon: FiTarget,
     name: "OnlineStore",
     routes: [
@@ -89,6 +95,11 @@ const sidebar = [
   {
     icon: FiSlack,
     name: "Pages",
+    path: "/pages",
+  },
+  {
+    icon: FiSlack,
+    name: "PagesSamples",
     routes: [
       // submenu
 

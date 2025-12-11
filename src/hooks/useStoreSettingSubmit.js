@@ -23,6 +23,7 @@ const useStoreSettingSubmit = (id) => {
   const [enabledGoogleAnalytics, setEnabledGoogleAnalytics] = useState(false);
   const [enabledFirebase, setEnabledFirebase] = useState(false);
   const [enabledStallion, setEnabledStallion] = useState(false);
+  const [enabledCloudinary, setEnabledCloudinary] = useState(false);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -83,6 +84,11 @@ const useStoreSettingSubmit = (id) => {
           stallion_base_url_sandbox: data.stallion_base_url_sandbox,
           stallion_base_url_prod: data.stallion_base_url_prod,
           stallion_webhook_secret: data.stallion_webhook_secret,
+          cloudinary_status: enabledCloudinary,
+          cloudinary_cloud_name: data.cloudinary_cloud_name,
+          cloudinary_api_key: data.cloudinary_api_key,
+          cloudinary_api_secret: data.cloudinary_api_secret,
+          cloudinary_upload_preset: data.cloudinary_upload_preset,
         },
       };
 
@@ -128,6 +134,7 @@ const useStoreSettingSubmit = (id) => {
           setEnabledGoogleAnalytics(res.google_analytic_status);
           setEnabledFirebase(res.firebase_status);
           setEnabledStallion(res.stallion_status);
+          setEnabledCloudinary(res.cloudinary_status);
           setValue("stripe_key", res.stripe_key);
           setValue("stripe_secret", res.stripe_secret);
           setValue("razorpay_id", res.razorpay_id);
@@ -159,6 +166,10 @@ const useStoreSettingSubmit = (id) => {
           setValue("stallion_base_url_sandbox", res.stallion_base_url_sandbox);
           setValue("stallion_base_url_prod", res.stallion_base_url_prod);
           setValue("stallion_webhook_secret", res.stallion_webhook_secret);
+          setValue("cloudinary_cloud_name", res.cloudinary_cloud_name);
+          setValue("cloudinary_api_key", res.cloudinary_api_key);
+          setValue("cloudinary_api_secret", res.cloudinary_api_secret);
+          setValue("cloudinary_upload_preset", res.cloudinary_upload_preset);
         }
       } catch (err) {
         notifyError(err?.response?.data?.message || err.message);
@@ -185,6 +196,8 @@ const useStoreSettingSubmit = (id) => {
     setEnabledFirebase,
     enabledStallion,
     setEnabledStallion,
+    enabledCloudinary,
+    setEnabledCloudinary,
     enabledRazorPay,
     setEnabledRazorPay,
     enabledFbPixel,

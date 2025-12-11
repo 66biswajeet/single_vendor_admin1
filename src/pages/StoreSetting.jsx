@@ -41,6 +41,8 @@ const StoreSetting = () => {
     setEnabledFirebase,
     enabledStallion,
     setEnabledStallion,
+    enabledCloudinary,
+    setEnabledCloudinary,
   } = useStoreSettingSubmit();
 
   const handleEnableDisableMethod = (checked, event, id) => {
@@ -280,6 +282,87 @@ const StoreSetting = () => {
                         placeholder="Your Webhook Secret (Optional)"
                       />
                       <Error errorName={errors.stallion_webhook_secret} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Cloudinary Configuration Section */}
+                <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                  <label className="block md:text-sm md:col-span-1 sm:col-span-2 text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                    Enable Cloudinary Config
+                  </label>
+                  <div className="sm:col-span-4">
+                    <SwitchToggle
+                      id="cloudinary"
+                      processOption={enabledCloudinary}
+                      handleProcess={setEnabledCloudinary}
+                    />
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    height: enabledCloudinary ? "auto" : 0,
+                    transition: "all .6s",
+                    visibility: !enabledCloudinary ? "hidden" : "visible",
+                    opacity: !enabledCloudinary ? "0" : "1",
+                  }}
+                  className={`${enabledCloudinary ? "mb-8" : "mb-2"}`}
+                >
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Cloudinary Cloud Name" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledCloudinary}
+                        register={register}
+                        label="Cloudinary Cloud Name"
+                        name="cloudinary_cloud_name"
+                        type="text"
+                        placeholder="your-cloud-name"
+                      />
+                      <Error errorName={errors.cloudinary_cloud_name} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Cloudinary API Key" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledCloudinary}
+                        register={register}
+                        label="Cloudinary API Key"
+                        name="cloudinary_api_key"
+                        type="password"
+                        placeholder="123456789012345"
+                      />
+                      <Error errorName={errors.cloudinary_api_key} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+                    <Label label="Cloudinary API Secret" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledCloudinary}
+                        register={register}
+                        label="Cloudinary API Secret"
+                        name="cloudinary_api_secret"
+                        type="password"
+                        placeholder="Your API Secret"
+                      />
+                      <Error errorName={errors.cloudinary_api_secret} />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-5 items-center sm:grid-cols-12 gap-3 md:gap-5 xl:gap-6 lg:gap-6">
+                    <Label label="Cloudinary Upload Preset" />
+                    <div className="sm:col-span-4">
+                      <InputAreaTwo
+                        required={enabledCloudinary}
+                        register={register}
+                        label="Cloudinary Upload Preset"
+                        name="cloudinary_upload_preset"
+                        type="text"
+                        placeholder="your-upload-preset"
+                      />
+                      <Error errorName={errors.cloudinary_upload_preset} />
                     </div>
                   </div>
                 </div>

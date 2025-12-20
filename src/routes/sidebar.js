@@ -97,22 +97,22 @@ const sidebar = [
     name: "Pages",
     path: "/pages",
   },
-  {
-    icon: FiSlack,
-    name: "PagesSamples",
-    routes: [
-      // submenu
+  // {
+  //   icon: FiSlack,
+  //   name: "PagesSamples",
+  //   routes: [
+  //     // submenu
 
-      {
-        path: "/404",
-        name: "404",
-      },
-      {
-        path: "/coming-soon",
-        name: "Coming Soon",
-      },
-    ],
-  },
+  //     {
+  //       path: "/404",
+  //       name: "404",
+  //     },
+  //     {
+  //       path: "/coming-soon",
+  //       name: "Coming Soon",
+  //     },
+  //   ],
+  // },
 ];
 
 export default sidebar;

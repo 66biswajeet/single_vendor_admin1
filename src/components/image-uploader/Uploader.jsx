@@ -476,6 +476,12 @@ const Uploader = ({
 
   return (
     <div className="w-full text-center">
+      {/* Display recommended image size */}
+      {targetWidth && targetHeight && (
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-2 text-left">
+          Recommended size: {targetWidth} × {targetHeight} px
+        </p>
+      )}
       <div
         className="border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-md cursor-pointer px-6 pt-5 pb-6"
         {...getRootProps()}

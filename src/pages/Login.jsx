@@ -8,8 +8,7 @@ import { useTranslation } from "react-i18next";
 import Error from "@/components/form/others/Error";
 import LabelArea from "@/components/form/selectOption/LabelArea";
 import InputArea from "@/components/form/input/InputArea";
-import ImageLight from "@/assets/img/login-office.jpeg";
-import ImageDark from "@/assets/img/login-office-dark.jpeg";
+import Logo from "@/assets/img/logo/logo-color.png";
 import useLoginSubmit from "@/hooks/useLoginSubmit";
 import CMButton from "@/components/form/button/CMButton";
 
@@ -23,19 +22,8 @@ const Login = () => {
       <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
         <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
           <div className="flex flex-col overflow-y-auto md:flex-row">
-            <div className="h-32 md:h-auto md:w-1/2">
-              <img
-                aria-hidden="true"
-                className="object-cover w-full h-full dark:hidden"
-                src={ImageLight}
-                alt="Office"
-              />
-              <img
-                aria-hidden="true"
-                className="hidden object-cover w-full h-full dark:block"
-                src={ImageDark}
-                alt="Office"
-              />
+            <div className="hidden md:flex md:w-1/2 bg-gradient-to-br from-amber-50 to-yellow-100 dark:from-amber-900 dark:to-yellow-800 items-center justify-center p-8">
+              <img src={Logo} alt="Company Logo" className="max-w-xs h-auto" />
             </div>
             <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
               <div className="w-full">
@@ -47,7 +35,7 @@ const Login = () => {
                   <InputArea
                     required={true}
                     register={register}
-                    defaultValue="admin@gmail.com"
+                    // defaultValue="your@email.com"
                     label="Email"
                     name="email"
                     type="email"
@@ -60,12 +48,11 @@ const Login = () => {
                   <InputArea
                     required={true}
                     register={register}
-                    defaultValue="12345678"
                     label="Password"
                     name="password"
                     type="password"
                     autocomplete="current-password"
-                    placeholder="***************"
+                    placeholder="8 digit Password"
                   />
                   <Error errorName={errors.password} />
 
@@ -87,7 +74,7 @@ const Login = () => {
                     </Button>
                   )}
                   <hr className="my-10" />
-                  <button
+                  {/* <button
                     disabled
                     className="text-sm inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center rounded-md focus:outline-none text-gray-700 bg-gray-100 shadow-sm my-2 md:px-2 lg:px-3 py-4 md:py-3.5 lg:py-4 hover:text-white hover:bg-blue-600 h-11 md:h-12 w-full mr-2"
                   >
@@ -100,7 +87,7 @@ const Login = () => {
                   >
                     <ImGoogle className="w-4 h-4 mr-2" />{" "}
                     <span className="ml-2">{t("LoginWithGoogle")}</span>
-                  </button>
+                  </button> */}
                 </form>
 
                 <p className="mt-4">
@@ -111,14 +98,14 @@ const Login = () => {
                     {t("ForgotPassword")}
                   </Link>
                 </p>
-                <p className="mt-1">
+                {/* <p className="mt-1">
                   <Link
                     className="text-sm font-medium text-emerald-500 dark:text-emerald-400 hover:underline"
                     to="/signup"
                   >
                     {t("CreateAccountTitle")}
                   </Link>
-                </p>
+                </p> */}
               </div>
             </main>
           </div>

@@ -487,8 +487,8 @@ const HomePage = ({
                       <Uploader
                         imageUrl={sliderImage}
                         setImageUrl={setSliderImage}
-                        targetWidth={950}
-                        targetHeight={400}
+                        targetWidth={1200}
+                        targetHeight={200}
                       />
                     </div>
                   </div>
@@ -570,8 +570,8 @@ const HomePage = ({
                       <Uploader
                         imageUrl={sliderImageTwo}
                         setImageUrl={setSliderImageTwo}
-                        targetWidth={950}
-                        targetHeight={400}
+                        targetWidth={1200}
+                        targetHeight={200}
                       />
                     </div>
                   </div>
@@ -649,8 +649,8 @@ const HomePage = ({
                       <Uploader
                         imageUrl={sliderImageThree}
                         setImageUrl={setSliderImageThree}
-                        targetWidth={950}
-                        targetHeight={400}
+                        targetWidth={1200}
+                        targetHeight={200}
                       />
                     </div>
                   </div>
@@ -728,8 +728,8 @@ const HomePage = ({
                       <Uploader
                         imageUrl={sliderImageFour}
                         setImageUrl={setSliderImageFour}
-                        targetWidth={950}
-                        targetHeight={400}
+                        targetWidth={1200}
+                        targetHeight={200}
                       />
                     </div>
                   </div>
@@ -806,8 +806,8 @@ const HomePage = ({
                       <Uploader
                         imageUrl={sliderImageFive}
                         setImageUrl={setSliderImageFive}
-                        targetWidth={950}
-                        targetHeight={400}
+                        targetWidth={1200}
+                        targetHeight={200}
                       />
                     </div>
                   </div>

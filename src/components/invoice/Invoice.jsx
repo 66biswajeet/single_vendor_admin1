@@ -62,6 +62,9 @@ const Invoice = ({ data, currency, getNumberTwo }) => {
             <TableCell className="px-6 py-1 whitespace-nowrap font-bold text-center">
               {item.quantity}{" "}
             </TableCell>
+            <TableCell className="px-6 py-1 whitespace-nowrap text-center text-gray-600 dark:text-gray-400">
+              {item.customData?.selectedSize || item.selectedSize || "-"}
+            </TableCell>
             <TableCell className="px-6 py-1 whitespace-nowrap font-bold text-center">
               {currency} {getNumberTwo(item.price)}
             </TableCell>

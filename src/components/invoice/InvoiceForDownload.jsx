@@ -509,6 +509,22 @@ const InvoiceForDownload = ({
                       fontFamily: "Open Sans",
                       fontWeight: "bold",
                       textTransform: "uppercase",
+                      textAlign: "center",
+                    }}
+                  >
+                    Selected Size
+                  </Text>
+                </Text>
+              </View>
+              <View style={styles.tableCol}>
+                <Text style={styles.tableCell}>
+                  <Text
+                    style={{
+                      color: "#6b7280",
+                      fontSize: 9,
+                      fontFamily: "Open Sans",
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
                       textAlign: "left",
                     }}
                   >
@@ -553,6 +569,23 @@ const InvoiceForDownload = ({
                       }}
                     >
                       {item.quantity}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={styles.tableCol}>
+                  <Text style={styles.tableCellQuantity}>
+                    <Text
+                      style={{
+                        fontSize: 9,
+                        textAlign: "center",
+                        alignItems: "center",
+                        fontFamily: "Open Sans",
+                        color: "#6b7280",
+                      }}
+                    >
+                      {item.customData?.selectedSize ||
+                        item.selectedSize ||
+                        "-"}
                     </Text>
                   </Text>
                 </View>

@@ -177,6 +177,7 @@ const OrderInvoice = () => {
                     <TableCell className="text-center">
                       {t("Quantity")}
                     </TableCell>
+                    <TableCell className="text-center">Selected Size</TableCell>
                     <TableCell className="text-center">
                       {t("ItemPrice")}
                     </TableCell>

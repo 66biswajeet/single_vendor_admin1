@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { useTranslation } from "react-i18next";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import JoditEditor from "jodit-react";
 
 import Title from "@/components/form/others/Title";
 import Error from "@/components/form/others/Error";
@@ -18,6 +14,7 @@ import usePageSubmit from "@/hooks/usePageSubmit";
 
 const PageDrawer = ({ id }) => {
   const { t } = useTranslation();
+  const editor = useRef(null);
   const {
     register,
     handleSubmit,
@@ -29,9 +26,77 @@ const PageDrawer = ({ id }) => {
     setPublished,
     isSubmitting,
     handleSelectLanguage,
-    editorState,
-    setEditorState,
+    editorContent,
+    setEditorContent,
   } = usePageSubmit(id);
+
+  // Jodit configuration with table and color picker enabled
+  const config = useMemo(
+    () => ({
+      readonly: false,
+      placeholder: "Start writing your page content...",
+      height: "calc(100vh - 300px)",
+      minHeight: 500,
+      toolbar: true,
+      spellcheck: true,
+      language: "en",
+      toolbarButtonSize: "middle",
+      toolbarAdaptive: false,
+      showCharsCounter: true,
+      showWordsCounter: true,
+      showXPathInStatusbar: false,
+      askBeforePasteHTML: false,
+      askBeforePasteFromWord: false,
+      // Explicitly enable table and color picker buttons
+      buttons: [
+        "source",
+        "|",
+        "bold",
+        "italic",
+        "underline",
+        "strikethrough",
+        "|",
+        "superscript",
+        "subscript",
+        "|",
+        "ul",
+        "ol",
+        "|",
+        "outdent",
+        "indent",
+        "|",
+        "font",
+        "fontsize",
+        "brush", // Color picker button
+        "paragraph",
+        "|",
+        "image",
+        "video",
+        "table", // Table button
+        "link",
+        "|",
+        "align",
+        "undo",
+        "redo",
+        "|",
+        "hr",
+        "eraser",
+        "copyformat",
+        "|",
+        "symbol",
+        "fullsize",
+        "print",
+      ],
+      // Enable paste from Excel/Word
+      pasteHTMLActionList: [
+        { value: "insert", text: "Keep" },
+        { value: "clean", text: "Clean" },
+      ],
+    }),
+    [],
+  );
+
+  // Remove the old handlePastedText function since Jodit handles this natively
 
   return (
     <>
@@ -53,9 +118,9 @@ const PageDrawer = ({ id }) => {
         )}
       </div>
 
-      <Scrollbars className="w-full md:w-7/12 lg:w-8/12 xl:w-8/12 relative dark:bg-gray-700 dark:text-gray-200">
-        <form onSubmit={handleSubmit(onSubmit)} className="block">
-          <div className="px-6 pt-8 flex-grow scrollbar-hide w-full max-h-full pb-40">
+      <Scrollbars className="w-full h-full relative dark:bg-gray-700 dark:text-gray-200">
+        <form onSubmit={handleSubmit(onSubmit)} className="block h-full">
+          <div className="px-6 pt-8 flex-grow scrollbar-hide w-full h-full pb-100">
             <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
               <LabelArea label={t("PageTitle")} />
               <div className="col-span-8 sm:col-span-4">
@@ -91,86 +156,13 @@ const PageDrawer = ({ id }) => {
               <LabelArea label={t("PageDescription")} />
               <div className="col-span-8 sm:col-span-4">
                 <div className="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md">
-                  <Editor
-                    editorState={editorState}
-                    onEditorStateChange={setEditorState}
-                    wrapperClassName="wrapper-class"
-                    editorClassName="editor-class px-4"
-                    toolbarClassName="toolbar-class border-b border-gray-200 dark:border-gray-600"
-                    toolbar={{
-                      options: [
-                        "inline",
-                        "blockType",
-                        "fontSize",
-                        "fontFamily",
-                        "list",
-                        "textAlign",
-                        "colorPicker",
-                        "link",
-                        "embedded",
-                        "emoji",
-                        "image",
-                        "remove",
-                        "history",
-                      ],
-                      inline: {
-                        options: [
-                          "bold",
-                          "italic",
-                          "underline",
-                          "strikethrough",
-                          "monospace",
-                        ],
-                      },
-                      blockType: {
-                        inDropdown: true,
-                        options: [
-                          "Normal",
-                          "H1",
-                          "H2",
-                          "H3",
-                          "H4",
-                          "H5",
-                          "H6",
-                          "Blockquote",
-                          "Code",
-                        ],
-                      },
-                      fontSize: {
-                        options: [
-                          8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72,
-                        ],
-                      },
-                      fontFamily: {
-                        options: [
-                          "Arial",
-                          "Georgia",
-                          "Impact",
-                          "Tahoma",
-                          "Times New Roman",
-                          "Verdana",
-                        ],
-                      },
-                      list: {
-                        inDropdown: false,
-                        options: ["unordered", "ordered"],
-                      },
-                      textAlign: {
-                        inDropdown: false,
-                        options: ["left", "center", "right", "justify"],
-                      },
-                      link: {
-                        inDropdown: false,
-                        options: ["link", "unlink"],
-                      },
-                      image: {
-                        uploadEnabled: true,
-                        previewImage: true,
-                        inputAccept:
-                          "image/gif,image/jpeg,image/jpg,image/png,image/svg",
-                        alt: { present: true, mandatory: false },
-                      },
-                    }}
+                  <JoditEditor
+                    ref={editor}
+                    value={editorContent}
+                    config={config}
+                    tabIndex={1}
+                    onBlur={(newContent) => setEditorContent(newContent)}
+                    onChange={(newContent) => {}}
                   />
                 </div>
                 <Error errorName={errors.description} />
@@ -220,7 +212,7 @@ const PageDrawer = ({ id }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6">
+            <div className="grid grid-cols-6 gap-3 md:gap-5 xl:gap-6 lg:gap-6 mb-6 h-80">
               <LabelArea label={t("Published")} />
               <div className="col-span-8 sm:col-span-4">
                 <SwitchToggle

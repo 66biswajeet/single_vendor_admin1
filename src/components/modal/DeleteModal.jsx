@@ -14,6 +14,7 @@ import CouponServices from "@/services/CouponServices";
 import CustomerServices from "@/services/CustomerServices";
 import LanguageServices from "@/services/LanguageServices";
 import ProductServices from "@/services/ProductServices";
+import PageServices from "@/services/PageServices";
 import useToggleDrawer from "@/hooks/useToggleDrawer";
 import AttributeServices from "@/services/AttributeServices";
 import CurrencyServices from "@/services/CurrencyServices";
@@ -223,6 +224,25 @@ const DeleteModal = ({ id, ids, setIsCheck, category, title, useParamId }) => {
           setIsSubmitting(false);
         } else {
           const res = await CurrencyServices.deleteCurrency(id);
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        }
+      }
+
+      if (location.pathname === "/pages") {
+        if (ids) {
+          const res = await PageServices.deleteManyPages({ ids: ids });
+          setIsUpdate(true);
+          notifySuccess(res.message);
+          setIsCheck([]);
+          setServiceId();
+          closeModal();
+          setIsSubmitting(false);
+        } else {
+          const res = await PageServices.deletePage(id);
           setIsUpdate(true);
           notifySuccess(res.message);
           setServiceId();

@@ -20,6 +20,9 @@ const MainDrawer = ({ children, product }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // treat pages route as a full-width drawer for easier editing
+  const isPageRoute = location.pathname === "/pages";
+
   // console.log('windowDimension ==========>', windowDimension <= 575);
 
   return (
@@ -30,7 +33,13 @@ const MainDrawer = ({ children, product }) => {
       level={null}
       placement={"right"}
       width={`${
-        windowDimension <= 575 ? "100%" : product || isProduct ? "85%" : "50%"
+        windowDimension <= 575
+          ? "100%"
+          : isPageRoute
+            ? "100%"
+            : product || isProduct
+              ? "85%"
+              : "50%"
       }`}
     >
       <button

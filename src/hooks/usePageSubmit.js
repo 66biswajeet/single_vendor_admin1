@@ -1,8 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
 
 import { SidebarContext } from "@/context/SidebarContext";
 import PageServices from "@/services/PageServices";
@@ -17,7 +14,7 @@ const usePageSubmit = (id) => {
   const [published, setPublished] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resData, setResData] = useState({});
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorContent, setEditorContent] = useState("");
 
   const { handlerTextTranslateHandler } = useTranslationValue();
 
@@ -34,15 +31,13 @@ const usePageSubmit = (id) => {
     try {
       setIsSubmitting(true);
 
-      // Get HTML from editor
-      const contentState = editorState.getCurrentContent();
-      const rawContent = convertToRaw(contentState);
-      const htmlContent = draftToHtml(rawContent);
+      // Get HTML from Jodit editor
+      const htmlContent = editorContent;
 
       const titleTranslates = await handlerTextTranslateHandler(
         data.title,
         language,
-        resData?.title
+        resData?.title,
       );
 
       const descriptionTranslates = {
@@ -53,13 +48,13 @@ const usePageSubmit = (id) => {
       const metaTitleTranslates = await handlerTextTranslateHandler(
         data.metaTitle || data.title,
         language,
-        resData?.metaTitle
+        resData?.metaTitle,
       );
 
       const metaDescriptionTranslates = await handlerTextTranslateHandler(
         data.metaDescription || "",
         language,
-        resData?.metaDescription
+        resData?.metaDescription,
       );
 
       const pageData = {
@@ -112,21 +107,12 @@ const usePageSubmit = (id) => {
       setValue("metaTitle", resData.metaTitle?.[lang ? lang : "en"] || "");
       setValue(
         "metaDescription",
-        resData.metaDescription?.[lang ? lang : "en"] || ""
+        resData.metaDescription?.[lang ? lang : "en"] || "",
       );
 
       // Set editor content for the selected language
       const description = resData.description?.[lang ? lang : "en"] || "";
-      if (description) {
-        const contentBlock = htmlToDraft(description);
-        if (contentBlock) {
-          const contentState = ContentState.createFromBlockArray(
-            contentBlock.contentBlocks
-          );
-          const newEditorState = EditorState.createWithContent(contentState);
-          setEditorState(newEditorState);
-        }
-      }
+      setEditorContent(description);
     }
   };
 
@@ -138,7 +124,7 @@ const usePageSubmit = (id) => {
       setValue("slug", "");
       setValue("metaTitle", "");
       setValue("metaDescription", "");
-      setEditorState(EditorState.createEmpty());
+      setEditorContent("");
       setPublished(false);
       setLanguage("en");
       clearErrors("title");
@@ -156,24 +142,14 @@ const usePageSubmit = (id) => {
             setValue("metaTitle", res.metaTitle?.[lang ? lang : "en"] || "");
             setValue(
               "metaDescription",
-              res.metaDescription?.[lang ? lang : "en"] || ""
+              res.metaDescription?.[lang ? lang : "en"] || "",
             );
             setImageUrl(res.headerBg);
             setPublished(res.published);
 
             // Set editor content
             const description = res.description?.[lang ? lang : "en"] || "";
-            if (description) {
-              const contentBlock = htmlToDraft(description);
-              if (contentBlock) {
-                const contentState = ContentState.createFromBlockArray(
-                  contentBlock.contentBlocks
-                );
-                const newEditorState =
-                  EditorState.createWithContent(contentState);
-                setEditorState(newEditorState);
-              }
-            }
+            setEditorContent(description);
           }
         } catch (err) {
           notifyError(err ? err?.response?.data?.message : err?.message);
@@ -193,8 +169,8 @@ const usePageSubmit = (id) => {
     setPublished,
     isSubmitting,
     handleSelectLanguage,
-    editorState,
-    setEditorState,
+    editorContent,
+    setEditorContent,
   };
 };
 

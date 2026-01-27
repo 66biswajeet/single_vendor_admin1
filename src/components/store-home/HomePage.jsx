@@ -123,7 +123,7 @@ const HomePage = ({
 
   return (
     <>
-      <div className="sticky top-0 z-20 flex justify-end">
+      <div className="sticky top-0 z-50 flex justify-end bg-white dark:bg-gray-800 py-3 mb-4">
         {isSubmitting ? (
           <Button disabled={true} type="button" className="h-10 px-6">
             <img
@@ -138,7 +138,7 @@ const HomePage = ({
             </span>
           </Button>
         ) : (
-          <Button type="submit" className="h-10 px-6 ">
+          <Button type="submit" className="h-10 px-6">
             {" "}
             {isSave ? t("SaveBtn") : t("UpdateBtn")}
           </Button>

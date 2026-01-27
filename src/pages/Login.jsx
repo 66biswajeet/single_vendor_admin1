@@ -90,7 +90,7 @@ const Login = () => {
                   </button> */}
                 </form>
 
-                { /*
+                {/*
                 <p className="mt-4">
                   <Link
                     className="text-sm font-medium text-emerald-500 dark:text-emerald-400 hover:underline"
@@ -99,7 +99,7 @@ const Login = () => {
                     {t("ForgotPassword")}
                   </Link>
                 </p>
-                */ }
+                */}
                 {/* <p className="mt-1">
                   <Link
                     className="text-sm font-medium text-emerald-500 dark:text-emerald-400 hover:underline"

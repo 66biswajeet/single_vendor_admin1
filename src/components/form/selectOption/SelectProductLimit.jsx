@@ -5,12 +5,7 @@ import React from "react";
 const SelectProductLimit = ({ register, name, label, required }) => {
   return (
     <>
-      <Select
-        name={name}
-        {...register(`${name}`, {
-          required: required ? `${label} is required!` : false,
-        })}
-      >
+      <Select name={name} {...register(`${name}`)}>
         <option value="" defaultValue hidden>
           Select Products Limit
         </option>
@@ -20,9 +15,10 @@ const SelectProductLimit = ({ register, name, label, required }) => {
           </option>
         ))} */}
 
-        <option value="6">6</option>
-        <option value="12">12</option>
-        <option value="18">18</option>
+        <option value="5">5</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
       </Select>
     </>
   );
